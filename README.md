@@ -5,7 +5,7 @@
 
 ## Projeto de Exemplo usando Laravel 9
 
-Cria um projeto para cadastro de veículos, tendo como objetivo, o estudo do Laravel 9
+Projeto para estudo do Laravel 9 criando um sistema de cadastro de veículos
 
 ## Licença
 
