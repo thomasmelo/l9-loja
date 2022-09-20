@@ -54,7 +54,7 @@ Route::prefix('acessorios')
 
     Route::post('store' ,'store')->name('acessorio.store');
     Route::post('/update/{id}' ,'update')->name('acessorio.update');
-    Route::post('/delete/{id}' ,'delete')->name('acessorio.delete');
+    Route::post('/destroy/{id}' ,'destroy')->name('acessorio.destroy');
 });
 
 /*
@@ -74,7 +74,7 @@ Route::prefix('acessorios-modelos')
 
         Route::post('store', 'store')->name('acessorioModelo.store');
         Route::post('/update/{id}', 'update')->name('acessorioModelo.update');
-        Route::post('/delete/{id}', 'delete')->name('acessorioModelo.delete');
+        Route::post('/destroy/{id}', 'destroy')->name('acessorioModelo.destroy');
     });
 
 /*
@@ -94,7 +94,7 @@ Route::prefix('marcas')
 
         Route::post('store', 'store')->name('marca.store');
         Route::post('/update/{id}', 'update')->name('marca.update');
-        Route::post('/delete/{id}', 'delete')->name('marca.delete');
+        Route::post('/destroy/{id}', 'destroy')->name('marca.destroy');
     });
 
 /*
@@ -114,7 +114,7 @@ Route::prefix('modelos')
 
         Route::post('store', 'store')->name('modelo.store');
         Route::post('/update/{id}', 'update')->name('modelo.update');
-        Route::post('/delete/{id}', 'delete')->name('modelo.delete');
+        Route::post('/destroy/{id}', 'destroy')->name('modelo.destroy');
     });
 /*
 |--------------------------------------------------------------------------
@@ -133,7 +133,7 @@ Route::prefix('veiculos')
 
         Route::post('store', 'store')->name('veiculo.store');
         Route::post('/update/{id}', 'update')->name('veiculo.update');
-        Route::post('/delete/{id}', 'delete')->name('veiculo.delete');
+        Route::post('/destroy/{id}', 'destroy')->name('veiculo.destroy');
     });
 
 require __DIR__.'/auth.php';
