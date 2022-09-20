@@ -33,3 +33,5 @@ yarn-error.log
 /docker-compose/mysql/server-key.pem
 /docker-compose/mysql/auto.cnf
 docker-compose/mysql/*
+storage/
+docker-compose/
