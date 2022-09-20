@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 # Models
 use App\Models\{
@@ -22,7 +23,7 @@ class VeiculoController extends Controller
      */
     public function index()
     {
-        $veiculos = Veiculo::orderBy('veiculo');
+        $veiculos = Veiculo::where('id_user',Auth::user()->id_user)->orderBy('veiculo');
         return view('veiculo.index')->with(compact('veiculos'));
     }
 
@@ -48,6 +49,7 @@ class VeiculoController extends Controller
     {
         $veiculo = new Veiculo();
         $veiculo->fill($request->all());
+        $veiculo->id_user = Auth::user()->id_user;
         $veiculo->save();
         return redirect()
             ->route('veiculo.index')
