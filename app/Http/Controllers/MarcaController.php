@@ -2,8 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Marca;
+
 use Illuminate\Http\Request;
+
+# Models
+use App\Models\{
+    Acessorio,
+    AcessorioModelo,
+    Marca,
+    Modelo,
+    User,
+    Veiculo
+};
 
 class MarcaController extends Controller
 {
@@ -14,7 +24,8 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        //
+        $marcas = Marca::orderBy('marca');
+        return view('marca.index')->with(compact('marcas'));
     }
 
     /**
@@ -24,7 +35,8 @@ class MarcaController extends Controller
      */
     public function create()
     {
-        //
+        $marca = null;        
+        return view('marca.form')->with(compact('marca'));
     }
 
     /**
@@ -35,7 +47,12 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $marca = new Marca();
+        $marca->fill($request->all());
+        $marca->save();       
+        return redirect()
+            ->route('marca.index')
+            ->with('success', 'Cadastrado com sucesso!');
     }
 
     /**
@@ -44,9 +61,10 @@ class MarcaController extends Controller
      * @param  \App\Models\Marca  $marca
      * @return \Illuminate\Http\Response
      */
-    public function show(Marca $marca)
+    public function show(int $id)
     {
-        //
+        $marca = Marca::find($id);
+        return view('marca.show')->with(compact('marca'));
     }
 
     /**
@@ -55,9 +73,10 @@ class MarcaController extends Controller
      * @param  \App\Models\Marca  $marca
      * @return \Illuminate\Http\Response
      */
-    public function edit(Marca $marca)
+    public function edit(int $id)
     {
-        //
+        $marca = Marca::find($id);      
+        return view('marca.form')->with(compact('marca'));
     }
 
     /**
@@ -67,9 +86,14 @@ class MarcaController extends Controller
      * @param  \App\Models\Marca  $marca
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Marca $marca)
+    public function update(Request $request, int $id)
     {
-        //
+        $marca = Marca::find($id);
+        $marca->fill($request->all());
+        $marca->save();        
+        return redirect()
+            ->route('marca.index')
+            ->with('success', 'Atualizado com sucesso!');
     }
 
     /**
@@ -78,8 +102,12 @@ class MarcaController extends Controller
      * @param  \App\Models\Marca  $marca
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Marca $marca)
+    public function destroy(int $id)
     {
-        //
+        $marca = Marca::find($id);       
+        $marca->delete();
+        return redirect()
+            ->route('marca.index')
+            ->with('danger', 'Removida com sucesso!');
     }
 }

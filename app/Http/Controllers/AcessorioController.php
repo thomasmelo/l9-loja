@@ -22,7 +22,7 @@ class AcessorioController extends Controller
     public function index()
     {
         $acessorios = Acessorio::orderBy('acessorio');
-        return view('acessorio.index')->with(compact('acessorios'))
+        return view('acessorio.index')->with(compact('acessorios'));
     }
 
     /**
