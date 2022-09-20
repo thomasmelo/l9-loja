@@ -2,8 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Modelo;
 use Illuminate\Http\Request;
+
+# Models
+use App\Models\{
+    Acessorio,
+    AcessorioModelo,
+    Marca,
+    Modelo,
+    User,
+    Veiculo
+};
 
 class ModeloController extends Controller
 {
@@ -14,7 +23,8 @@ class ModeloController extends Controller
      */
     public function index()
     {
-        //
+        $modelos = Modelo::orderBy('modelo');
+        return view('modelo.index')->with(compact('modelos'));
     }
 
     /**
@@ -24,7 +34,9 @@ class ModeloController extends Controller
      */
     public function create()
     {
-        //
+        $modelo = null;
+        $marcas = Marca::orderBy('marca')->get();
+        return view('modelo.form')->with(compact('modelo', 'marcas'));
     }
 
     /**
@@ -35,7 +47,12 @@ class ModeloController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $modelo = new Modelo();
+        $modelo->fill($request->all());
+        $modelo->save();       
+        return redirect()
+            ->route('modelo.index')
+            ->with('success', 'Cadastrado com sucesso!');
     }
 
     /**
@@ -44,9 +61,10 @@ class ModeloController extends Controller
      * @param  \App\Models\Modelo  $modelo
      * @return \Illuminate\Http\Response
      */
-    public function show(Modelo $modelo)
+    public function show(int $id)
     {
-        //
+        $modelo = Modelo::find($id);
+        return view('modelo.show')->with(compact('modelo'));
     }
 
     /**
@@ -55,9 +73,11 @@ class ModeloController extends Controller
      * @param  \App\Models\Modelo  $modelo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Modelo $modelo)
+    public function edit(int $id)
     {
-        //
+        $modelo = Modelo::find($id);
+        $marcas = Marca::orderBy('marca')->get();
+        return view('modelo.form')->with(compact('modelo', 'marcas'));
     }
 
     /**
@@ -67,9 +87,14 @@ class ModeloController extends Controller
      * @param  \App\Models\Modelo  $modelo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Modelo $modelo)
+    public function update(Request $request, int $id)
     {
-        //
+        $modelo = Modelo::find($id);
+        $modelo->fill($request->all());
+        $modelo->save();        
+        return redirect()
+            ->route('modelo.index')
+            ->with('success', 'Atualizado com sucesso!');
     }
 
     /**
@@ -78,8 +103,12 @@ class ModeloController extends Controller
      * @param  \App\Models\Modelo  $modelo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Modelo $modelo)
+    public function destroy(int $id)
     {
-        //
+        $modelo = Modelo::find($id);        
+        $modelo->delete();
+        return redirect()
+            ->route('modelo.index')
+            ->with('danger', 'Removido com sucesso!');
     }
 }
