@@ -2,8 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Veiculo;
 use Illuminate\Http\Request;
+# Models
+use App\Models\{
+    Acessorio,
+    AcessorioModelo,
+    Marca,
+    Modelo,
+    User,
+    Veiculo
+};
 
 class VeiculoController extends Controller
 {
@@ -14,7 +22,8 @@ class VeiculoController extends Controller
      */
     public function index()
     {
-        //
+        $veiculos = Veiculo::orderBy('veiculo');
+        return view('veiculo.index')->with(compact('veiculos'));
     }
 
     /**
@@ -24,7 +33,9 @@ class VeiculoController extends Controller
      */
     public function create()
     {
-        //
+        $veiculo = null;
+        $modelos = Modelo::orderBy('modelo')->get();
+        return view('veiculo.form')->with(compact('veiculo', 'modelos'));
     }
 
     /**
@@ -35,51 +46,68 @@ class VeiculoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $veiculo = new Veiculo();
+        $veiculo->fill($request->all());
+        $veiculo->save();
+        return redirect()
+            ->route('veiculo.index')
+            ->with('success', 'Cadastrado com sucesso!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Veiculo  $veiculo
+     * @param  \App\Models\veiculo  $veiculo
      * @return \Illuminate\Http\Response
      */
-    public function show(Veiculo $veiculo)
+    public function show(int $id)
     {
-        //
+        $veiculo = Veiculo::find($id);
+        return view('veiculo.show')->with(compact('veiculo'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Veiculo  $veiculo
+     * @param  \App\Models\veiculo  $veiculo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Veiculo $veiculo)
+    public function edit(int $id)
     {
-        //
+        $veiculo = Veiculo::find($id);
+        $modelos = Modelo::orderBy('modelo')->get();
+        return view('veiculo.form')->with(compact('veiculo', 'modelos'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Veiculo  $veiculo
+     * @param  \App\Models\veiculo  $veiculo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Veiculo $veiculo)
+    public function update(Request $request, int $id)
     {
-        //
+        $veiculo = Veiculo::find($id);
+        $veiculo->fill($request->all());
+        $veiculo->save();
+        return redirect()
+            ->route('veiculo.index')
+            ->with('success', 'Atualizado com sucesso!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Veiculo  $veiculo
+     * @param  \App\Models\veiculo  $veiculo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Veiculo $veiculo)
+    public function destroy(int $id)
     {
-        //
+        $veiculo = Veiculo::find($id);
+        $veiculo->delete();
+        return redirect()
+            ->route('veiculo.index')
+            ->with('danger', 'Removido com sucesso!');
     }
 }
