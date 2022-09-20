@@ -2,8 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AcessorioModelo;
+
 use Illuminate\Http\Request;
+# Models
+use App\Models\{
+    Acessorio,
+    AcessorioModelo,
+    Marca,
+    Modelo,
+    User,
+    Veiculo
+};
 
 class AcessorioModeloController extends Controller
 {

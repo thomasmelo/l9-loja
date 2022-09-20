@@ -20,10 +20,9 @@ O sistema de cadastro de veículos possui seguintes funcionalidades:
 
 Ao baixar o repositório siga os passos abaixo:
 
-* Execute o comando **composer install**, para isntalação dos pacotes do projeto
-* Crie o banco de dados
-* Crie o arquivo .env e gere a chave APP_KEY, com o comando **php artisan key:generate**
-* Configure o arquivo .env com suas credendiais do bando de dados
-* Crie as tabelas, executando o comando -  **php artisan migrate**
-* Execute os comandos **npm install** e **npm run dev** para instalação dos pacotes do Breeze, Vite
-
+- Execute o comando **composer install**, para isntalação dos pacotes do projeto
+- Crie o banco de dados
+- Crie o arquivo .env e gere a chave APP_KEY, com o comando **php artisan key:generate**
+- Configure o arquivo .env com suas credendiais do bando de dados
+- Crie as tabelas, executando o comando -  **php artisan migrate**
+- Execute os comandos **npm install** e **npm run dev** para instalação dos pacotes do Breeze, Vite

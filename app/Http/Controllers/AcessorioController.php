@@ -1,9 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Acessorio;
 use Illuminate\Http\Request;
+# Models
+use App\Models\{
+                Acessorio,
+                AcessorioModelo,
+                Marca,
+                Modelo,
+                User,
+                Veiculo
+            };
 
 class AcessorioController extends Controller
 {
@@ -14,7 +21,8 @@ class AcessorioController extends Controller
      */
     public function index()
     {
-        //
+        $acessorios = Acessorio::orderBy('acessorio');
+        return view('acessorio.index')->with(compact('acessorios'))
     }
 
     /**
@@ -24,7 +32,9 @@ class AcessorioController extends Controller
      */
     public function create()
     {
-        //
+        $acessorio = null;
+        $modelos = Modelo::orderBy('modelo')->get();
+        return view('acessorio.form')->with(compact('acessorio', 'modelos'));
     }
 
     /**
@@ -35,7 +45,17 @@ class AcessorioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $acessorio = new Acessorio();
+        $acessorio->fill($request->all());
+        $acessorio->save();
+        // vincular os modelos ao acessorio
+        if ($request->has('modelos')) {            
+            $acessorio->adicionarModelo($request->modelos);
+        }
+
+        return redirect()
+                ->route('acessorio.index')
+                ->with('success','Cadastrado com sucesso!');
     }
 
     /**
@@ -44,9 +64,10 @@ class AcessorioController extends Controller
      * @param  \App\Models\Acessorio  $acessorio
      * @return \Illuminate\Http\Response
      */
-    public function show(Acessorio $acessorio)
+    public function show(int $id)
     {
-        //
+        $acessorio = Acessorio::find($id);
+        return view('acessorio.show')->with(compact('acessorio'));
     }
 
     /**
@@ -55,9 +76,11 @@ class AcessorioController extends Controller
      * @param  \App\Models\Acessorio  $acessorio
      * @return \Illuminate\Http\Response
      */
-    public function edit(Acessorio $acessorio)
+    public function edit(int $id)
     {
-        //
+        $acessorio = Acessorio::find($id);
+        $modelos = Modelo::orderBy('modelo')->get();
+        return view('acessorio.form')->with(compact('acessorio','modelos'));
     }
 
     /**
@@ -67,9 +90,25 @@ class AcessorioController extends Controller
      * @param  \App\Models\Acessorio  $acessorio
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Acessorio $acessorio)
+    public function update(Request $request, int $id)
     {
-        //
+        $acessorio = Acessorio::find($id);
+        $acessorio->fill($request->all());
+        $acessorio->save();
+        /**
+         * Atualização dos relacionamentos com `AcessorioModelo`
+         */
+        $acessorio->removerModelos();
+
+        if ($request->has('modelos')) {
+            // foreach ($acessorio->modelos as $modeloAnterior) {
+            //     $modeloAnterior->delete();
+            // }
+            $acessorio->adicionarModelo($request->modelos);
+        }
+        return redirect()
+            ->route('acessorio.index')
+            ->with('success', 'Atualizado com sucesso!');
     }
 
     /**
@@ -78,8 +117,13 @@ class AcessorioController extends Controller
      * @param  \App\Models\Acessorio  $acessorio
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Acessorio $acessorio)
+    public function destroy(int $id)
     {
-        //
+        $acessorio = Acessorio::find($id);
+        $acessorio->removerModelos();
+        $acessorio->delete();
+        return redirect()
+            ->route('acessorio.index')
+            ->with('danger', 'Removido com sucesso!');
     }
 }
