@@ -27,11 +27,11 @@ class Modelo extends Model
 
     public function marca()
     {
-        return $this->belongsTo(Marca::class, 'id_marca', 'id_marca');
+        return $this->belongsTo(Marca::class, 'id_marca', 'id_marca')->withTrashed();
     }
 
     public function acessorios()
     {
-        return $this->belongsTo(AcessorioModelo::class, 'id_modelo', 'id_modelo');
+        return $this->belongsTo(AcessorioModelo::class, 'id_modelo', 'id_modelo')->withTrashed();
     }
 }

@@ -27,7 +27,7 @@ class Acessorio extends Model
 
     public function modelos()
     {
-        return $this->belongsTo(AcessorioModelo::class, 'id_acessorio', 'id_acessorio');
+        return $this->belongsTo(AcessorioModelo::class, 'id_acessorio', 'id_acessorio')->withTrashed();
     }
 
     /**

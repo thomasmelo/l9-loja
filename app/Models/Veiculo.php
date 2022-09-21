@@ -34,11 +34,11 @@ class Veiculo extends Model
 
     public function modelo()
     {
-        return $this->belongsTo(Modelo::class, 'id_modelo', 'id_modelo');
+        return $this->belongsTo(Modelo::class, 'id_modelo', 'id_modelo')->withTrashed();
     }
 
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'id_user', 'id_user');
+        return $this->belongsTo(User::class, 'id_user', 'id_user')->withTrashed();
     }
 }

@@ -27,6 +27,6 @@ class Marca extends Model
 
     public function modelos()
     {
-        return $this->belongsTo(Modelo::class, 'id_marca', 'id_marca');
+        return $this->belongsTo(Modelo::class, 'id_marca', 'id_marca')->withTrashed();
     }
 }

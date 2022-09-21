@@ -3,7 +3,7 @@
 
 <h1>
     <i class="bi bi-shield-fill"></i>
-    Marca : {{ $marca->marca }}
+    Cod.: {{ $marca->id_marca }} Marca : {{ $marca->marca }}
 </h1>
 
 <h2> 

@@ -3,7 +3,7 @@
 
 <h1>
     <i class="bi bi-card-list"></i>
-    Modelo : {{ $modelo->modelo }} - {{ $modelo->marca->marca}} - {{ $modelo->anos_modelo}}
+   Cod.: {{ $modelo->id_modelo }} - Modelo : {{ $modelo->modelo }} - {{ $modelo->marca->marca}} - {{ $modelo->anos_modelo}}
 </h1>
 <p>{!! nl2br($modelo->descricao) !!}</p>
 
