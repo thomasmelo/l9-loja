@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #Models
-use App\Models\{Marca};
+use App\Models\{Marca, AcessorioModelo};
 
 class Modelo extends Model
 {
@@ -28,5 +28,10 @@ class Modelo extends Model
     public function marca()
     {
         return $this->belongsTo(Marca::class, 'id_marca', 'id_marca');
+    }
+
+    public function acessorios()
+    {
+        return $this->belongsTo(AcessorioModelo::class, 'id_modelo', 'id_modelo');
     }
 }
