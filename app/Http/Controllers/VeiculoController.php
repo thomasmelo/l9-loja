@@ -23,7 +23,7 @@ class VeiculoController extends Controller
      */
     public function index()
     {
-        $veiculos = Veiculo::where('id_user',Auth::user()->id_user)->orderBy('veiculo');
+        $veiculos = Veiculo::where('id_user',Auth::user()->id)->orderBy('placa');
         return view('veiculo.index')->with(compact('veiculos'));
     }
 
@@ -49,7 +49,7 @@ class VeiculoController extends Controller
     {
         $veiculo = new Veiculo();
         $veiculo->fill($request->all());
-        $veiculo->id_user = Auth::user()->id_user;
+        $veiculo->id_user = Auth::user()->id;
         $veiculo->save();
         return redirect()
             ->route('veiculo.index')

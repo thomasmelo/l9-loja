@@ -39,6 +39,6 @@ class Veiculo extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'id_user', 'id_user')->withTrashed();
+        return $this->belongsTo(User::class, 'id_user', 'id');
     }
 }
