@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 # Models
 use App\Models\{
     Acessorio,
@@ -50,6 +51,12 @@ class VeiculoController extends Controller
         $veiculo = new Veiculo();
         $veiculo->fill($request->all());
         $veiculo->id_user = Auth::user()->id;
+        // subir imagem
+        if($request->foto){
+            // pegar a extesão do arquivo
+            $extensao = $request->foto->getClientOriginalExtension();
+            $veiculo->foto = $request->foto->storeAS('fotos', date('YmdHis').".".$extensao);
+        }
         $veiculo->save();
         return redirect()
             ->route('veiculo.index')
@@ -91,7 +98,21 @@ class VeiculoController extends Controller
     public function update(Request $request, int $id)
     {
         $veiculo = Veiculo::find($id);
+        // vertificar se um arquivo foi enviado
+        if ($request->foto) {
+            //caso exista um arquivo, remove-lo antes de atualizar
+            if (Storage::exists($veiculo->foto)) {
+                Storage::delete($veiculo->foto);
+            }            
+        }
         $veiculo->fill($request->all());
+        // subir imagem
+        if ($request->foto) {
+            // pegar a extesão do arquivo
+            $extensao = $request->foto->getClientOriginalExtension();
+            $veiculo->foto = $request->foto->storeAS('fotos', date('YmdHis') . "." . $extensao);
+        }
+
         $veiculo->save();
         return redirect()
             ->route('veiculo.index')

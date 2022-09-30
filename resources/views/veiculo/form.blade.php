@@ -13,9 +13,9 @@
 </h1>
 {{-- FORMULARIO --}}
 @if ($veiculo)
-    <form action="{{ route('veiculo.update', ['id'=>$veiculo->id_veiculo]) }}" method="POST" class="row" >    
+    <form action="{{ route('veiculo.update', ['id'=>$veiculo->id_veiculo]) }}" method="POST"  class="row" enctype="multipart/form-data" >    
 @else
-    <form action="{{ route('veiculo.store') }}" method="POST" class="row" >    
+    <form action="{{ route('veiculo.store') }}" method="POST" class="row" enctype="multipart/form-data" >    
 @endif
     {{-- TOKEN --}}
     @csrf    
@@ -46,6 +46,10 @@
                 >{!! $modelo->modelo !!}</option>
             @endforeach
         </select>
+    </div>
+    <div class="col-md-12">
+        <label for="foto" class="form-label">Foto</label>
+       <input type="file" class="form-control" name="foto" id="foto">
     </div>
     <div class="col-md-12">
         <label for="descricao" class="form-label">Descrição</label>

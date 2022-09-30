@@ -22,7 +22,8 @@ class Veiculo extends Model
                         'valor', 
                         'cor', 
                         'placa', 
-                        'descricao'
+                        'descricao',
+                        'foto'
                         ];
 
     /*

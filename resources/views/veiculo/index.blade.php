@@ -16,10 +16,11 @@
         <tr>
             <th>Ações</th>
             <th>Cód.:</th>
-            <th>Propriétário(a)</th>                        
-            <th>Modelo/Marca</th>                        
-            <th>Placa</th>                        
-            <th>Valor</th>                        
+            <th>Propriétário(a)</th>
+            <th>Modelo/Marca</th>
+            <th>Placa</th>
+            <th>Valor</th>
+            <th>foto</th>
             <th>Criado</th>
             <th>Atualizado</th>
         </tr>
@@ -48,6 +49,11 @@
                 <td>{{ $veiculo->modelo->modelo}} / {{ $veiculo->modelo->marca->marca }}</td>                               
                 <td>{{ $veiculo->placa}}</td>
                 <td>{{ $veiculo->valor}}</td>
+                <td>
+                     @if($veiculo->foto)
+                    <img src="{{ url("storage/{$veiculo->foto}") }}" class="img-thumbnail">
+                    @endif
+                </td>
                 <td>{{ $veiculo->created_at->format('d/m/Y')}}</td>
                 <td>{{ $veiculo->updated_at->format('d/m/Y')}}</td>
             </tr>

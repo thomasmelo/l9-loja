@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('cor')->nullable();
             $table->string('placa')->nullable();
             $table->text('descricao')->nullable();
+            $table->string('foto')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
