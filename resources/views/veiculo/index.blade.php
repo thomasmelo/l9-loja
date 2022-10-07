@@ -9,8 +9,28 @@
         Adicionar
     </a>
 </h1>
+{{-- PESQUISA --}}
+<form action="{{ route('veiculo.index') }}" method="get" class="hstack gap-3 rounded border border-secondary p-2">
+    <input class="form-control me-auto" type="text" placeholder="Digite Placa ou Modelo ou Marca"
+        aria-label="Pesquisar..." name="search">
+    <input class="form-control me-auto" type="number" placeholder="Valor Mínimo" 
+        aria-label="Valor Mínimo..." name="minimo" id="minimo" min="0">
+    <input class="form-control me-auto" type="number" placeholder="Valor Máximo" aria-label="Valor Máximo..." 
+        aria-label="Valor Máximo..." name="maximo"  id="maximo" min="0">
+    <input type="submit" value="Pesquisar" class="btn btn-secondary">   
+    <div class="vr"></div>
+    <a href="{{ route('veiculo.index') }}" class="btn btn-outline-danger">Limpar</a>  
+</form>
+{{-- /PESQUISA --}}
+
 {{-- ALERTAS --}}
 @include('layouts.alerts')
+
+{{-- PAGINAÇÃO --}}
+{{ 
+$veiculos->appends([ 'search' => request()->get('search'), 'minimo' => request()->get('minimo'), 'maximo'=>request()->get('maximo')])->links() 
+}}
+
 <table class="table table-striped table-responsive table-striped table-hover">
     <thead>
         <tr>
@@ -26,10 +46,10 @@
         </tr>
         </thead>
         <tbody>
-            @foreach ($veiculos->get() as $veiculo)
+            @foreach ($veiculos as $veiculo)
             <tr>
                 <td class="col-md-1">
-                    <div class="d-flex ">
+                    <div class="flex-col">
                         <a href="{{ route('veiculo.show', ['id'=>$veiculo->id_veiculo]) }}" class="btn btn-primary m-1">
                             <i class="bi bi-eye-fill"></i>
                         </a>
@@ -60,6 +80,7 @@
             @endforeach 
         </tbody>
 </table> 
+
 
 @endsection
 

@@ -22,9 +22,66 @@ class VeiculoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $veiculos = Veiculo::where('id_user',Auth::user()->id)->orderBy('placa');
+        $search = $request->get('search', null);
+        $minimo = $request->get('minimo', null);
+        $maximo = $request->get('maximo', null);
+        
+        // estaciar o objecto e retornar os dados cdos seus relacionamentos
+        $veiculos = Veiculo::with([
+                                    'modelo.marca',
+                                    'modelo.acessorios',
+                                    'usuario'
+                                ])->where('id_user',Auth::user()->id)
+                                  ->where( function ($query) use ($search, $minimo, $maximo) {
+
+                                    if($search){
+                                        $query->where('veiculos.placa', 'like', "%{$search}%");
+                                        //pesquisar pelo nome do modelo
+                                        // forma tradicional
+                                        // $query->orWhereHas('modelo', function ($query) use ($search) {
+                                        //         $query->where('modelos.modelo', 'like', "%{$search}%");
+                                        //     }
+                                        // );
+
+                                        // usando a função de forma curta ( Short Arrow )                                        
+                                        $query->orWhereHas(
+                                            'modelo',
+                                            fn ($query) =>
+                                            $query->where('modelos.modelo', 'like', "%{$search}%")
+                                        );
+                                        $query->orWhereHas(
+                                            'modelo',
+                                            fn ($query) =>
+                                            $query->where('modelos.descricao', 'like', "%{$search}%")
+                                        );
+                                        $query->orWhereHas(
+                                            'modelo',
+                                            fn ($query) =>
+                                            $query->where('modelos.anos_modelo', 'like', "%{$search}%")
+                                        );
+
+                                        //pesquisar pelo nome da marca
+                                        $query->orWhereHas(
+                                            'modelo.marca',
+                                            fn($query) =>
+                                            $query->where( 'marcas.marca', 'like', "%{$search}%")
+                                        );
+                                    }
+
+                                    // pesquisar por valores
+                                    if($minimo && $maximo){
+                                        $query->whereBetween('valor',[$minimo,$maximo]);
+                                    }else if($minimo){
+                                        $query->where('valor','>=', $minimo );
+                                    } else if ($maximo) {
+                                        $query->where('valor', '<=', $maximo);
+                                    }
+
+                                  })
+                                  ->orderBy('placa')
+                                  ->paginate(5);
         return view('veiculo.index')->with(compact('veiculos'));
     }
 
