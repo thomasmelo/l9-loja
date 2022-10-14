@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+
+# Envio de E-mail
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VeiculoInformacoes;
+
 # Models
 use App\Models\{
     Acessorio,
@@ -189,5 +194,44 @@ class VeiculoController extends Controller
         return redirect()
             ->route('veiculo.index')
             ->with('danger', 'Removido com sucesso!');
+    }
+
+
+    /**
+     * Envia um e-mails com os dados do veículo.
+     *
+     * @param  \App\Models\veiculo  $veiculo
+     * @return \Illuminate\Http\Response
+     */
+    public function email(int $id)
+    {
+        $veiculo = Veiculo::find($id);
+        # Formas de enviar a mensagem por e-mail
+        Mail::to('email@do.destinatario')->send(new VeiculoInformacoes($veiculo));
+        // Mail::to(Auth::user())->send(new VeiculoInformacoes($veiculo));
+        // Mail::to(auth()->user())->send(new VeiculoInformacoes($veiculo));
+        
+        # Renderizar o HTML do e-mail
+        // return (new VeiculoInformacoes($veiculo))->render();
+
+        # Visualizar o e-mail no navegador
+        // return new \App\Mail\VeiculoInformacoes($veiculo);
+
+        return redirect()
+            ->back()
+            ->with('success', 'E-mail enviado com sucesso!');
+        
+    }
+
+    /**
+     * Exibe os dados do veículo em uma área pública.
+     *
+     * @param  \App\Models\veiculo  $veiculo
+     * @return \Illuminate\Http\Response
+     */
+    public function informacoes(int $id)
+    {
+        $veiculo = Veiculo::find($id);
+        return view('veiculo.informacoes')->with(compact('veiculo'));
     }
 }

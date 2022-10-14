@@ -31,49 +31,50 @@
 
 <body>
     <div class="container">
-        {{-- MENU --}}
-        <nav class="navbar navbar-expand-lg bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/">
-                    L9 - Loja Autos
-                    - {{ Auth::user()->name }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavFluxo"
-                    aria-controls="navbarNavFluxo" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavFluxo">
-                    <div class="navbar-nav">
-                        <a class="nav-link" href="{{ route('home') }}">
-                            <i class="bi bi-house-door-fill"></i>
-                            Home
-                        </a>
-                        <a class="nav-link" href="{{ route('acessorio.index') }}">
-                            <i class="bi bi-boxes"></i>
-                            Acessórios
-                        </a>
-                        <a class="nav-link" href="{{ route('modelo.index') }}">
-                            <i class="bi bi-card-list"></i>
-                            Modelos
-                        </a>
-                        <a class="nav-link" href="{{ route('marca.index') }}">
-                            <i class="bi bi-shield-fill"></i>
-                            Marcas
-                        </a>
-                        <a class="nav-link" href="{{ route('veiculo.index') }}">
-                            <i class="bi bi-car-front-fill"></i>
-                            Veículos
-                        </a>
-                        <a class="nav-link" href="{{ route('logout') }}">
-                            <i class="bi bi-box-arrow-right"></i>
-                            Sair
-                        </a>
+        @if(auth()->user())
+            {{-- MENU --}}
+            <nav class="navbar navbar-expand-lg bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/">
+                        L9 - Loja Autos
+                        - {{ Auth::user()->name }}
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavFluxo"
+                        aria-controls="navbarNavFluxo" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavFluxo">
+                        <div class="navbar-nav">
+                            <a class="nav-link" href="{{ route('home') }}">
+                                <i class="bi bi-house-door-fill"></i>
+                                Home
+                            </a>
+                            <a class="nav-link" href="{{ route('acessorio.index') }}">
+                                <i class="bi bi-boxes"></i>
+                                Acessórios
+                            </a>
+                            <a class="nav-link" href="{{ route('modelo.index') }}">
+                                <i class="bi bi-card-list"></i>
+                                Modelos
+                            </a>
+                            <a class="nav-link" href="{{ route('marca.index') }}">
+                                <i class="bi bi-shield-fill"></i>
+                                Marcas
+                            </a>
+                            <a class="nav-link" href="{{ route('veiculo.index') }}">
+                                <i class="bi bi-car-front-fill"></i>
+                                Veículos
+                            </a>
+                            <a class="nav-link" href="{{ route('logout') }}">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Sair
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </nav>
-        {{-- /MENU --}}
-
+            </nav>
+            {{-- /MENU --}}
+        @endif
         {{-- CONTEÚDO --}}
         <div class="row mt-2 mb-4">
             @yield('conteudo')

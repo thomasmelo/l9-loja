@@ -130,10 +130,23 @@ Route::prefix('veiculos')
         Route::get('/create', 'create')->name('veiculo.create');
         Route::get('/edit/{id}', 'edit')->name('veiculo.edit');
         Route::get('/show/{id}', 'show')->name('veiculo.show');
+        Route::get('/email/{id}','email')->name('veiculo.email');
 
         Route::post('store', 'store')->name('veiculo.store');
         Route::post('/update/{id}', 'update')->name('veiculo.update');
         Route::post('/destroy/{id}', 'destroy')->name('veiculo.destroy');
+    });
+
+/*
+|--------------------------------------------------------------------------
+| VEÍCULO - ÁREAS PÚBLICAS
+| Thomas Melo - 14-10-2022
+|--------------------------------------------------------------------------
+*/
+Route::prefix('veiculos')    
+    ->controller(VeiculoController::class)
+    ->group(function () {       
+        Route::get('/informacoes/{id}', 'informacoes')->name('veiculo.informacoes');       
     });
 
 require __DIR__.'/auth.php';

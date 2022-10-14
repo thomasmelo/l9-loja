@@ -56,6 +56,9 @@ $veiculos->appends([ 'search' => request()->get('search'), 'minimo' => request()
                         <a href="{{ route('veiculo.edit', ['id'=>$veiculo->id_veiculo]) }}" class="btn btn-success m-1">
                             <i class="bi bi-pencil-fill"></i>
                         </a>
+                        <a href="{{ route('veiculo.email', ['id'=>$veiculo->id_veiculo]) }}" class="btn btn-secondary m-1">
+                            <i class="bi bi-send"></i>
+                        </a>
                         <button type="button" class="btn btn-danger m-1" data-bs-toggle="modal" 
                             data-bs-target="#modalExcluir"                           
                             data-bs-url="{!! route('veiculo.destroy', ['id' => $veiculo->id_veiculo]) !!}"
